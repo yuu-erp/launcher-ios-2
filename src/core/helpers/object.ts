@@ -1,5 +1,5 @@
-import { Entity, ValueObject } from '@core/domain/entities'
-
+import { Entity } from '@core/domain/entities'
+import { ValueObject } from '@core/domain/value-objects'
 function isEntity(obj: unknown): obj is Entity<unknown> {
   /**
    * 'instanceof Entity' causes error here for some reason.

@@ -5,7 +5,7 @@ export interface RepositoryPort<Entity> {
   findAll(): Entity[]
   findByKey(key: StringEnum<keyof Entity>): Entity
 
-  insert(entity: Entity): void | Entity
+  insert(entity: Entity): Entity | Promise<Entity>
   insertMany(entities: Entity[]): void | Entity[]
 
   update(entity: Entity): void | Entity
