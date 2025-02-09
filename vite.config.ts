@@ -1,14 +1,9 @@
-import { defineConfig } from 'vitest/config' // 🔥 Đúng: Import từ "vitest/config"
+import { defineConfig } from 'vite'
 import path from 'path'
 import eslint from 'vite-plugin-eslint'
 
 export default defineConfig({
   plugins: [eslint()],
-  test: {
-    globals: true, // Cho phép sử dụng test mà không cần import
-    environment: 'jsdom', // Giả lập DOM
-    setupFiles: './src/setupTests.ts' // Chạy trước mỗi test
-  },
   base: './',
   server: {
     host: '0.0.0.0',
