@@ -8,21 +8,18 @@ import { StoragePort } from '@core/infrastructure/storage/storage.port'
 export class DappRepositoryImpl implements IDappRepository {
   protected readonly key: string = 'applications'
   constructor(
-    protected readonly storage: StoragePort, // Adapter lưu trữ
-    protected readonly mapper: Mapper<DappEntity, DappResponse> // Chuyển đổi giữa Entity và Response
+    protected readonly storage: StoragePort,
+    protected readonly mapper: Mapper<DappEntity, DappResponse>
   ) {}
-  // ✅ Lấy danh sách tất cả ứng dụng
   findAll(): DappEntity[] {
     const records = this.storage.get(this.key) || []
-    return records.map(this.mapper.toDomain) // Convert từ response sang entity
+    return records.map(this.mapper.toDomain)
   }
-  // ✅ Tìm ứng dụng theo ID
-  findById(id: string): DappEntity | null {
+  findById(id: number): DappEntity | null {
     const records: DappResponse[] = this.storage.get(this.key) || []
-    const record = records.find((item) => item.id.toString() === id)
+    const record = records.find((item) => item.id === id)
     return record ? this.mapper.toDomain(record) : null
   }
-  // ✅ Thêm mới một ứng dụng
   insert(entity: DappEntity): DappEntity {
     const records = this.storage.get(this.key) || []
     const newRecord = this.mapper.toResponse(entity) // Convert entity sang response
@@ -30,7 +27,6 @@ export class DappRepositoryImpl implements IDappRepository {
     this.storage.set(this.key, records) // Lưu lại vào storage
     return entity
   }
-  // ✅ Cập nhật một ứng dụng
   update(entity: DappEntity): DappEntity {
     let records: DappResponse[] = this.storage.get(this.key) || []
     records = records.map((item) => (item.id === entity.getProps().id ? this.mapper.toResponse(entity) : item))
@@ -38,7 +34,7 @@ export class DappRepositoryImpl implements IDappRepository {
     return entity
   }
 
-  // 🚀 Các method khác có thể triển khai tương tự...
+  // 🚀 Các method khác...
   findByKey(_key: StringEnum<keyof DappEntity>): DappEntity {
     throw new Error('Method not implemented.')
   }

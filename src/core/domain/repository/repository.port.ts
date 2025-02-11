@@ -1,7 +1,7 @@
-import type { StringEnum } from '@techmely/types'
+import type { EntityId, StringEnum } from '@techmely/types'
 
 export interface RepositoryPort<Entity> {
-  findById(id: string): Entity | null
+  findById(id: EntityId): Entity | null
   findAll(): Entity[]
   findByKey(key: StringEnum<keyof Entity>): Entity
 
